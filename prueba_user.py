@@ -18,6 +18,7 @@ import facebook_business
 #import graph
 
 #llamada de cuentas
+#2
 token = "EAAfj47wzha8BAEUZCWUSytRh1rRh4BDJwrHTpv76rYHjYQ2L2ZAl6MAGGE0D5uzEIpDjFogsmDDaL5EE6Got4HWR6b5qeuE0aL0HZBaY5nkfLtPyOe6ZAlPegVxhoQLe96aZCKGcm3l2H8rBIrIU1Bmqx5HTCTXuWqWYnPQMQsXmIGqRXzWDqzyRkRzp5P8A5fTeoTUcZAX7y48JOPQnZA8n1kqwSxedDql3QViInlcb1u0JcZCDn9jX"
 fields= ['name','access_token']
 me= "122990462555483"
