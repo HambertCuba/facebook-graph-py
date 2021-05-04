@@ -19,22 +19,36 @@ import facebook_business
 #pip install graph-theory
 import graph
 #pip install requests
-import requests
+
 
 #llamada de cuentas
 #2
-token = "EAAfj47wzha8BAEUZCWUSytRh1rRh4BDJwrHTpv76rYHjYQ2L2ZAl6MAGGE0D5uzEIpDjFogsmDDaL5EE6Got4HWR6b5qeuE0aL0HZBaY5nkfLtPyOe6ZAlPegVxhoQLe96aZCKGcm3l2H8rBIrIU1Bmqx5HTCTXuWqWYnPQMQsXmIGqRXzWDqzyRkRzp5P8A5fTeoTUcZAX7y48JOPQnZA8n1kqwSxedDql3QViInlcb1u0JcZCDn9jX"
+token = "EAAfj47wzha8BAMAacVES9jcb2UJZAFwdJsAokZBCNZAzEVpCPSOHfodvgxqmUJEwtcvMdDKek9EiiPteLMVYIfkPrdLXZCP3f6CT9aQFq7onNCbDaKdvlYKxKKrvTJvAEHwTHvodpUMkhmxRZCMrxZBGZCHGMkcipPR4BZCXN0Qi1FZAKHgZA7dZBA5"
 fields= ['name','access_token']
 me= "122990462555483"
-api= "https://graph.facebook.com/"+'v.10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token'+token
+api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
 print(api)
 headers1 = {
     'Content-Type': 'application/json'
                 }
-response=requests.get(api,stream=True,headers=headers1)
-print(response.url)
-response = response.json()
-
+responseprueba=requests.get(api,stream=True,headers=headers1)
+#print(response.url)
+responseprueba = responseprueba.json()
+resultadosprueba=responseprueba["data"]
+lista1=[]
+for x in resultadosprueba:
+   ## print(x["name"])
+    accesstoken=x["access_token"]
+    id=x["id"]
+    name=x["name"]
+    lista1.append( ##formato para agregar a una lista de forma manual
+        {
+             "accesstoken":accesstoken,
+             "id":id,
+             "name":name,
+        }
+    ) 
+resultados=pd.DataFrame(lista1)
     
     
    
