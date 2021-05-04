@@ -14,8 +14,12 @@ import csv
 import logging
 import pprint
 #import psycopg2
+#pip install facebook-business
 import facebook_business
-#import graph
+#pip install graph-theory
+import graph
+#pip install requests
+import requests
 
 #llamada de cuentas
 #2
@@ -28,7 +32,7 @@ headers1 = {
     'Content-Type': 'application/json'
                 }
 response=requests.get(api,stream=True,headers=headers1)
-pprint(response.url)
+print(response.url)
 response = response.json()
 
     
