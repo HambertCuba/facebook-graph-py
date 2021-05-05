@@ -59,6 +59,22 @@ headers2 = {
 responseprueba2=requests.get(api2,stream=True,headers=headers2)
 #print(response.url)
 responseprueba2 = responseprueba2.json()
+resultadosprueba2=responseprueba2["data"]
+
+#print(resultadosprueba2[0]['id'])
+
+#sacar los likes -- ejemplo para uno solo por ahora
+token3 = resultadosprueba[0]['access_token']
+me3= resultadosprueba2[0]['id']
+api3= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/'+'?fields=likes.summary(true)&access_token='+token3
+print(api3)
+headers3 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba3=requests.get(api2,stream=True,headers=headers3)
+#print(response.url)
+responseprueba3 = responseprueba3.json()
+#resultadosprueba2=responseprueba2["data"]
     
    
     
