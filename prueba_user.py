@@ -48,7 +48,7 @@ resultados=pd.DataFrame(lista1)
 
 #print(resultadosprueba[0]['id'])
 
-#sacar las publicaciones por cada objeto
+#sacar las publicaciones por cada objeto de la lista
 token1 = resultadosprueba[0]['access_token']
 me2= resultadosprueba[0]['id']
 api2= "https://graph.facebook.com/"+'v10.0'+'/'+me2+'/'+'published_posts?access_token='+token1
@@ -56,7 +56,7 @@ print(api2)
 headers2 = {
     'Content-Type': 'application/json'
                 }
-responseprueba2=requests.get(api,stream=True,headers=headers2)
+responseprueba2=requests.get(api2,stream=True,headers=headers2)
 #print(response.url)
 responseprueba2 = responseprueba2.json()
     
