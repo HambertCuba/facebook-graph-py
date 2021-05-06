@@ -1,4 +1,4 @@
-import requests
+
 import json
 import pandas as pd
 import csv
@@ -15,12 +15,17 @@ import logging
 import pprint
 #import psycopg2
 import facebook_business
-import requests
+import requests, urllib3, facebook
 
 
 
 token = "EAAfj47wzha8BAMAacVES9jcb2UJZAFwdJsAokZBCNZAzEVpCPSOHfodvgxqmUJEwtcvMdDKek9EiiPteLMVYIfkPrdLXZCP3f6CT9aQFq7onNCbDaKdvlYKxKKrvTJvAEHwTHvodpUMkhmxRZCMrxZBGZCHGMkcipPR4BZCXN0Qi1FZAKHgZA7dZBA5"
-fields= ['name','access_token']
+##prueba##
+graph=facebook.GraphAPI(token)
+profile=graph.get_object('122990462555483', fields='first_name,location,link,email')
+print(json.dumps(profile, indent=4))
+###
+fields= ['me','access_token']
 me= "122990462555483"
 api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
 print(api)
@@ -75,6 +80,8 @@ responseprueba3=requests.get(api2,stream=True,headers=headers3)
 #print(response.url)
 responseprueba3 = responseprueba3.json()
 #resultadosprueba2=responseprueba2["data"]
+
+
     
    
     
