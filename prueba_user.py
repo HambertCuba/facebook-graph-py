@@ -87,6 +87,7 @@ while after:
                 #print(after)
                 break
 
+#cantidad de publicaciones
 cantidad=len(owned_apps)
 
 
