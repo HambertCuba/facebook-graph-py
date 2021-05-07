@@ -16,6 +16,7 @@ import pandas.io.formats.excel
 from openpyxl import load_workbook
 from openpyxl import Workbook
 import xlsxwriter
+import pydrive2
 from googledrive import subir_archivo
 
 #sacar las fechas de filtro
@@ -57,19 +58,37 @@ resultados=pd.DataFrame(lista1)
 
 #print(resultadosprueba[0]['id'])
 
-#sacar las publicaciones por cada objeto de la lista
+#####sacar las publicaciones por cada objeto de la lista - cantidad e id del objeto
 token1 = resultadosprueba[3]['access_token']
 me2= resultadosprueba[3]['id']
-api2= "https://graph.facebook.com/"+'v10.0'+'/'+me2+'/'+'published_posts?access_token='+token1+'&period=day&since='+fecha2+'&until='+fecha1
+api2= "https://graph.facebook.com/"+'v10.0'+'/'+me2+'/'+'published_posts?access_token='+token1+'&period=day&since='+fecha2+'&until='+fecha1+'&limit=100'
 print(api2)
 headers2 = {
     'Content-Type': 'application/json'
                 }
+owned_apps = []
 responseprueba2=requests.get(api2,stream=True,headers=headers2)
 #print(response.url)
 responseprueba2 = responseprueba2.json()
 resultadosprueba2=responseprueba2["data"]
-#print(resultadosprueba2[0]['id'])
+owned_apps.extend(responseprueba2['data'])
+after = responseprueba2.get('paging',{}).get('cursors',{}).get('after',None)
+#print(responseprueba2["paging"]['next'])
+
+while after:            
+            api_paginated = api2  + "&after=" + after
+            responseprueba_2 = requests.get(url=api_paginated, stream=True, headers = headers2)
+            #pprint(responseprueba2.url) 
+            responseprueba_2 = responseprueba_2.json()
+            owned_apps.extend(responseprueba_2['data'])
+            after = responseprueba_2.get('paging',{}).get('cursors',{}).get('after',None)
+ 
+            if not after or after == '':
+                #print(after)
+                break
+
+cantidad=len(owned_apps)
+
 
 #######################parametros para la pagina
 #Lifetime Post Total Reach
@@ -85,8 +104,6 @@ responseprueba3=requests.get(api3,stream=True,headers=headers3)
 responseprueba3 = responseprueba3.json()
 resultadosprueba3=responseprueba3["data"][0]["values"]
 resultadospruebafinal1=resultadosprueba3[0]["value"]
-
-#resultadosprueba2=responseprueba2["data"]
 
 
 #Lifetime Post organic reach
@@ -261,19 +278,22 @@ responseprueba15 = responseprueba15.json()
 resultadosprueba15=responseprueba15["data"][0]["values"]
 resultadospruebafinal13=resultadosprueba15[0]["value"]
 
-listafinal = {resultadospruebafinal1,resultadospruebafinal2,resultadospruebafinal3,
-                              resultadospruebafinal4,resultadospruebafinal5,resultadospruebafinal6,
-                              resultadospruebafinal7,resultadospruebafinal8,resultadospruebafinal9,
-                              resultadospruebafinal10,resultadospruebafinal11,resultadospruebafinal12,
-                              resultadospruebafinal13}
-
-
-
-
-listafinal2 = {'Resultados' : pd.Series([resultadospruebafinal1,resultadospruebafinal2], index =['Life', 
-                                                                                                 'Life2'])}
+listafinal2=[]
+listafinal2 = {'Resultados' : pd.Series([cantidad,resultadospruebafinal1,resultadospruebafinal2,
+                                         resultadospruebafinal3,resultadospruebafinal4,
+                                         resultadospruebafinal5,resultadospruebafinal6,
+                                         resultadospruebafinal7,resultadospruebafinal8,
+                                         resultadospruebafinal9,resultadospruebafinal10,
+                                         resultadospruebafinal11,resultadospruebafinal12,
+                                         resultadospruebafinal13], index =['Cantidad de publicaciones',
+                                        'Lifetime Post Total Reach','Lifetime Post organic reach',
+                                        'Lifetime Post Paid Reach','Lifetime Post Total Impressions',
+                                        'Lifetime Post Organic Impressions','Lifetime Post Paid Impressions',
+                                        'Lifetime Engaged Users','Lifetime Negative Feedback from Users',
+                                        'Lifetime Negative Feedback','Like','Link clicks','Visualizaciones de video totales Total',
+                                        'Reproducciones totales de 30 segundos Total'])}
 
 dataframefinal = pd.DataFrame(listafinal2)
 
-dataframefinal.to_excel('Libro.xlsx', sheet_name='Detalle',index=True)
-subir_archivo('Libro.xlsx','1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
+dataframefinal.to_excel('Indicadores.xlsx', sheet_name='DetallePagina',index=True)
+subir_archivo('Indicadores.xlsx','1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
