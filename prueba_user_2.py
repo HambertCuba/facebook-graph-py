@@ -102,7 +102,7 @@ fecha= fecha[0:10]
 #Lifetime Post Total Reach
 token3 = resultadosprueba[3]['access_token']
 me3= owned_apps[3]['id']
-api3= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/page_posts_impressions_unique?access_token='+token3
+api3= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_unique?access_token='+token3
 print(api3)
 headers3 = {
     'Content-Type': 'application/json'
@@ -110,14 +110,14 @@ headers3 = {
 responseprueba3=requests.get(api3,stream=True,headers=headers3)
 #print(response.url)
 responseprueba3 = responseprueba3.json()
-resultadosprueba3=responseprueba3["data"][0]["value"]
+resultadosprueba3=responseprueba3["data"][0]["values"]
 resultadospruebafinal1=resultadosprueba3[0]["value"]
 
 
 #Lifetime Post organic reach
 token4 = resultadosprueba[3]['access_token']
 me3= owned_apps[3]['id']
-api4= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/page_posts_impressions_organic_unique?access_token='+token4
+api4= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_organic_unique?access_token='+token4
 print(api4)
 headers4 = {
     'Content-Type': 'application/json'
@@ -131,7 +131,7 @@ resultadospruebafinal2=resultadosprueba4[0]["value"]
 #Lifetime Post Paid Reach
 token5 = resultadosprueba[3]['access_token']
 me3= owned_apps[3]['id']
-api5= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/page_posts_impressions_paid_unique?access_token='+token5
+api5= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_paid_unique?access_token='+token5
 print(api5)
 headers5 = {
     'Content-Type': 'application/json'
@@ -145,7 +145,7 @@ resultadospruebafinal3=resultadosprueba5[0]["value"]
 #Lifetime Post Total Impressions
 token6 = resultadosprueba[3]['access_token']
 me3= owned_apps[3]['id']
-api6= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/page_posts_impressions?access_token='+token6
+api6= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions?access_token='+token6
 print(api6)
 headers6 = {
     'Content-Type': 'application/json'
@@ -159,7 +159,7 @@ resultadospruebafinal4=resultadosprueba6[0]["value"]
 #Lifetime Post Total organic Impressions
 token7 = resultadosprueba[3]['access_token']
 me3= owned_apps[3]['id']
-api7= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/page_posts_impressions_organic?access_token='+token7
+api7= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_organic?access_token='+token7
 print(api7)
 headers7 = {
     'Content-Type': 'application/json'
@@ -173,7 +173,7 @@ resultadospruebafinal5=resultadosprueba7[0]["value"]
 #Lifetime Post Total Paid Impressions
 token8 = resultadosprueba[3]['access_token']
 me3= owned_apps[3]['id']
-api8= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/page_posts_impressions_paid?access_token='+token8
+api8= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_paid?access_token='+token8
 print(api8)
 headers8 = {
     'Content-Type': 'application/json'
@@ -187,7 +187,7 @@ resultadospruebafinal6=resultadosprueba8[0]["value"]
 #Lifetime Engaged Users
 token9 = resultadosprueba[3]['access_token']
 me3= owned_apps[3]['id']
-api9= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/page_posts_engaged_users?access_token='+token9
+api9= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_engaged_users?access_token='+token9
 print(api9)
 headers9 = {
     'Content-Type': 'application/json'
@@ -201,7 +201,7 @@ resultadospruebafinal7=resultadosprueba9[0]["value"]
 #Lifetime Negative Feedback from Users
 token10 = resultadosprueba[3]['access_token']
 me3= owned_apps[3]['id']
-api10= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/page_posts_negative_feedback_unique?access_token='+token10
+api10= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_negative_feedback_unique?access_token='+token10
 print(api10)
 headers10 = {
     'Content-Type': 'application/json'
@@ -216,7 +216,7 @@ resultadospruebafinal8=resultadosprueba10[0]["value"]
 #Lifetime Negative Feedback
 token11 = resultadosprueba[3]['access_token']
 me3= owned_apps[3]['id']
-api11= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/page_posts_negative_feedback?access_token='+token11
+api11= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_negative_feedback?access_token='+token11
 print(api11)
 headers11 = {
     'Content-Type': 'application/json'
