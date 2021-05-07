@@ -1,4 +1,3 @@
-
 import json
 import pandas as pd
 import csv
@@ -12,12 +11,17 @@ import pprint
 from datetime import datetime, date, time, timedelta
 import calendar
 import facebook_business
-import requests, urllib3, facebook
+import requests, urllib3
+import pandas.io.formats.excel
+from openpyxl import load_workbook
+from openpyxl import Workbook
+import xlsxwriter
+from googledrive import subir_archivo
 
 #sacar las fechas de filtro
 formato1="%Y-%m-%d"
 now = datetime.today()
-fecha_atras = now - timedelta(days=2)
+fecha_atras = now - timedelta(days=1)
 #print(fecha_atras)
 fecha1=now.strftime(formato1)
 fecha2=fecha_atras.strftime(formato1)
@@ -25,11 +29,6 @@ fecha2=fecha_atras.strftime(formato1)
 
 #sacar la cuenta de facebook:id y token
 token = "EAAfj47wzha8BAMAacVES9jcb2UJZAFwdJsAokZBCNZAzEVpCPSOHfodvgxqmUJEwtcvMdDKek9EiiPteLMVYIfkPrdLXZCP3f6CT9aQFq7onNCbDaKdvlYKxKKrvTJvAEHwTHvodpUMkhmxRZCMrxZBGZCHGMkcipPR4BZCXN0Qi1FZAKHgZA7dZBA5"
-##prueba##
-graph=facebook.GraphAPI(token)
-profile=graph.get_object('122990462555483', fields='first_name,location,link,email')
-print(json.dumps(profile, indent=4))
-###
 fields= ['me','access_token']
 me= "122990462555483"
 api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
@@ -84,15 +83,11 @@ headers3 = {
 responseprueba3=requests.get(api3,stream=True,headers=headers3)
 #print(response.url)
 responseprueba3 = responseprueba3.json()
-<<<<<<< HEAD
 resultadosprueba3=responseprueba3["data"][0]["values"]
-=======
+resultadospruebafinal1=resultadosprueba3[0]["value"]
+
 #resultadosprueba2=responseprueba2["data"]
 
-
-
-
->>>>>>> origin/main
 
 #Lifetime Post organic reach
 token4 = resultadosprueba[3]['access_token']
@@ -106,6 +101,7 @@ responseprueba4=requests.get(api4,stream=True,headers=headers4)
 #print(response.url)
 responseprueba4 = responseprueba4.json()
 resultadosprueba4=responseprueba4["data"][0]["values"]
+resultadospruebafinal2=resultadosprueba4[0]["value"]
 
 #Lifetime Post Paid Reach
 token5 = resultadosprueba[3]['access_token']
@@ -119,6 +115,7 @@ responseprueba5=requests.get(api5,stream=True,headers=headers5)
 #print(response.url)
 responseprueba5 = responseprueba5.json()
 resultadosprueba5=responseprueba5["data"][0]["values"]
+resultadospruebafinal3=resultadosprueba5[0]["value"]
 
 #Lifetime Post Total Impressions
 token6 = resultadosprueba[3]['access_token']
@@ -132,6 +129,7 @@ responseprueba6=requests.get(api6,stream=True,headers=headers6)
 #print(response.url)
 responseprueba6 = responseprueba6.json()
 resultadosprueba6=responseprueba6["data"][0]["values"]
+resultadospruebafinal4=resultadosprueba6[0]["value"]
 
 #Lifetime Post Total organic Impressions
 token7 = resultadosprueba[3]['access_token']
@@ -145,11 +143,12 @@ responseprueba7=requests.get(api7,stream=True,headers=headers7)
 #print(response.url)
 responseprueba7 = responseprueba7.json()
 resultadosprueba7=responseprueba7["data"][0]["values"]
+resultadospruebafinal5=resultadosprueba7[0]["value"]
 
 #Lifetime Post Total Paid Impressions
 token8 = resultadosprueba[3]['access_token']
 me3= resultadosprueba[3]['id']
-api8= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/page_impressions_paid_unique?access_token='+token8+'&period=day&since='+fecha2+'&until='+fecha1
+api8= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/page_impressions_paid?access_token='+token8+'&period=day&since='+fecha2+'&until='+fecha1
 print(api8)
 headers8 = {
     'Content-Type': 'application/json'
@@ -158,6 +157,7 @@ responseprueba8=requests.get(api8,stream=True,headers=headers8)
 #print(response.url)
 responseprueba8 = responseprueba8.json()
 resultadosprueba8=responseprueba8["data"][0]["values"]
+resultadospruebafinal6=resultadosprueba8[0]["value"]
 
 #Lifetime Engaged Users
 token9 = resultadosprueba[3]['access_token']
@@ -171,6 +171,7 @@ responseprueba9=requests.get(api9,stream=True,headers=headers9)
 #print(response.url)
 responseprueba9 = responseprueba9.json()
 resultadosprueba9=responseprueba9["data"][0]["values"]
+resultadospruebafinal7=resultadosprueba9[0]["value"]
 
 #Lifetime Negative Feedback from Users
 token10 = resultadosprueba[3]['access_token']
@@ -184,6 +185,7 @@ responseprueba10=requests.get(api10,stream=True,headers=headers10)
 #print(response.url)
 responseprueba10 = responseprueba10.json()
 resultadosprueba10=responseprueba10["data"][0]["values"]
+resultadospruebafinal8=resultadosprueba10[0]["value"]
 
 
 #Lifetime Negative Feedback
@@ -198,6 +200,7 @@ responseprueba11=requests.get(api11,stream=True,headers=headers11)
 #print(response.url)
 responseprueba11 = responseprueba11.json()
 resultadosprueba11=responseprueba11["data"][0]["values"]
+resultadospruebafinal9=resultadosprueba11[0]["value"]
 
 
 #Like
@@ -212,6 +215,8 @@ responseprueba12=requests.get(api12,stream=True,headers=headers12)
 #print(response.url)
 responseprueba12 = responseprueba12.json()
 resultadosprueba12=responseprueba12["data"][0]["values"]
+resultadospruebafinal10=resultadosprueba12[0]["value"]
+
 
 #Link clicks
 token13 = resultadosprueba[3]['access_token']
@@ -225,6 +230,7 @@ responseprueba13=requests.get(api13,stream=True,headers=headers13)
 #print(response.url)
 responseprueba13 = responseprueba13.json()
 resultadosprueba13=responseprueba13["data"][0]["values"]
+resultadospruebafinal11=resultadosprueba13[0]["value"]
 
 
 #Visualizaciones de video totales Total
@@ -239,6 +245,7 @@ responseprueba14=requests.get(api14,stream=True,headers=headers14)
 #print(response.url)
 responseprueba14 = responseprueba14.json()
 resultadosprueba14=responseprueba14["data"][0]["values"]
+resultadospruebafinal12=resultadosprueba14[0]["value"]
 
 #Reproducciones totales de 30 segundos Total
 token15 = resultadosprueba[3]['access_token']
@@ -252,3 +259,21 @@ responseprueba15=requests.get(api15,stream=True,headers=headers15)
 #print(response.url)
 responseprueba15 = responseprueba15.json()
 resultadosprueba15=responseprueba15["data"][0]["values"]
+resultadospruebafinal13=resultadosprueba15[0]["value"]
+
+listafinal = {resultadospruebafinal1,resultadospruebafinal2,resultadospruebafinal3,
+                              resultadospruebafinal4,resultadospruebafinal5,resultadospruebafinal6,
+                              resultadospruebafinal7,resultadospruebafinal8,resultadospruebafinal9,
+                              resultadospruebafinal10,resultadospruebafinal11,resultadospruebafinal12,
+                              resultadospruebafinal13}
+
+
+
+
+listafinal2 = {'Resultados' : pd.Series([resultadospruebafinal1,resultadospruebafinal2], index =['Life', 
+                                                                                                 'Life2'])}
+
+dataframefinal = pd.DataFrame(listafinal2)
+
+dataframefinal.to_excel('Libro.xlsx', sheet_name='Detalle',index=True)
+subir_archivo('Libro.xlsx','1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
