@@ -41,6 +41,7 @@ responseprueba=requests.get(api,stream=True,headers=headers1)
 #print(response.url)
 responseprueba = responseprueba.json()
 resultadosprueba=responseprueba["data"]
+aqwdq=pd.DataFrame(resultadosprueba)
 lista1=[]
 for x in resultadosprueba:
    ### print(x["name"])
@@ -89,19 +90,67 @@ while after:
 
 cantidad=len(owned_apps)
 
-
 #######################parametros para la publicacion
 #identificador de la publicacion
-id = owned_apps[0]['id']
+listatemp=[]
+for i in owned_apps:
+    ##print(i["message"])
+    created_time=i["created_time"]
+    idpub=i["id"]
+    titulo_pub=str(i["message"])
+    listatemp.append( ##formato para agregar a una lista de forma manual
+        {
+             "fecha_pub":created_time,
+             "id_pub":id,
+             "titulo_pub":titulo_pub,
+        }
+    )
+listatempFrame=pd.DataFrame(listatemp)
+print(listatempFrame['id_pub'])
 
 #fecha de publicacion
 fecha = owned_apps[0]['created_time']
 fecha= fecha[0:10]
 
 
-#Lifetime Post Total Reach
+#############################################PRUEBA ITERACION#################
+#listatempFrame
 token3 = resultadosprueba[3]['access_token']
-me3= owned_apps[3]['id']
+headers3 = {
+    'Content-Type': 'application/json'
+                }
+item2=0
+listaReach=[]
+while item2 <= len(owned_apps):
+    resultadosprueba3=[]
+    ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
+    responseprueba3=requests.get("https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_unique?access_token='+token3,
+                                 stream=True,
+                                 headers=headers3)
+    responseprueba3 = responseprueba3.json()
+    resultadosprueba3=responseprueba3["data"][0]["values"]
+    resultadospruebafinal1=resultadosprueba3[0]["value"]
+    fechapub11=owned_apps[item2]['created_time']
+    id_22=owned_apps[item2]['id']
+    titulo22=owned_apps[item2]['message']
+    listaReach.append( ##formato para agregar a una lista de forma manual
+        {
+             "fecha_pub2":fechapub11,
+             "id_pub2":id_22,
+             "titulo_pub2":titulo22,
+             "totalReach":resultadospruebafinal1,
+        }
+    )
+    item2+=1
+    if item2==len(owned_apps):
+        print(item2)
+        break
+##########################CREACION DATAFRAME PARA LA METRICA###################
+asdq=pd.DataFrame(listaReach)
+asdq.to_excel('Indicadores.xlsx', sheet_name='TotalReach',index=False)
+
+
+###########################33
 api3= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_unique?access_token='+token3
 print(api3)
 headers3 = {
@@ -113,13 +162,27 @@ responseprueba3 = responseprueba3.json()
 resultadosprueba3=responseprueba3["data"][0]["values"]
 resultadospruebafinal1=resultadosprueba3[0]["value"]
 
+#Lifetime Post Total Reach##CHECK
+token3 = resultadosprueba[3]['access_token']
+me3= owned_apps[0]['id']
+api3= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_unique?access_token='+token3
+print(api3)
+headers3 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba3=requests.get(api3,stream=True,headers=headers3)
+#print(response.url)
+responseprueba3 = responseprueba3.json()
+resultadosprueba3=responseprueba3["data"][0]["values"]
+resultadospruebafinal1=resultadosprueba3[0]["value"]
 
+######################################ITERAR#######################################################
 #Lifetime Post organic reach
-token4 = resultadosprueba[3]['access_token']
+token4 = resultadosprueba[3]['access_token'] ## VARIABLE FIJA
 me3= owned_apps[3]['id']
 api4= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_organic_unique?access_token='+token4
 print(api4)
-headers4 = {
+headers4 = { ##VARIABLE FIJA
     'Content-Type': 'application/json'
                 }
 responseprueba4=requests.get(api4,stream=True,headers=headers4)
