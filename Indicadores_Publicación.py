@@ -209,7 +209,7 @@ listaReachOrganic=pd.DataFrame(listaReachOrganic)
 #asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post organic reach"],index=False,startcol=4)
 
 
-listaReach.merge(listaReachOrganic,on="ID Publicación",how="left")
+listaReach=listaReach.merge(listaReachOrganic,on="ID Publicación",how="left")
 
 # #Lifetime Post Paid Reach
 # token5 = resultadosprueba[3]['access_token']
