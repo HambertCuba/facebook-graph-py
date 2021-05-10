@@ -98,7 +98,8 @@ id = owned_apps[0]['id']
 fecha = owned_apps[0]['created_time']
 fecha= fecha[0:10]
 
-#####################ITERACION PARA METRICAS#################
+#####################ITERACION PARA METRICA 1 ################
+#Lifetime Post Total Reach
 token3 = resultadosprueba[3]['access_token']
 headers3 = {
     'Content-Type': 'application/json'
@@ -106,17 +107,17 @@ headers3 = {
 item2=0
 listaReach=[]
 while item2 <= len(owned_apps):
-    resultadosprueba3=[]
+    resultadosprueba_1=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
     api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_unique?access_token='+token3
     print(api)
-    responseprueba3=requests.get(api,
+    responseprueba_1=requests.get(api,
                                  stream=True,
                                  headers=headers3)
-    responseprueba3 = responseprueba3.json()
-    resultadosprueba3=responseprueba3["data"][0]["values"]
-    resultadospruebafinal1=resultadosprueba3[0]["value"]
+    responseprueba_1 = responseprueba_1.json()
+    resultadosprueba_1=responseprueba_1["data"][0]["values"]
+    resultadospruebafinal_1=resultadosprueba_1[0]["value"]
     fechapub11=owned_apps[item2]['created_time']
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
@@ -125,7 +126,7 @@ while item2 <= len(owned_apps):
              "Fecha Publicación":fechapub11,
              "ID Publicación":id_22,
              "Título Publicación":titulo22,
-             "Lifetime Post Total Reach":resultadospruebafinal1,
+             "Lifetime Post Total Reach":resultadospruebafinal_1,
         }
     )
     item2+=1
@@ -137,156 +138,528 @@ asdq=pd.DataFrame(listaReach)
 asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total Reach"],index=False,startcol=4)
 
 
+###########################
+# #Lifetime Post Total Reach
+# token3 = resultadosprueba[3]['access_token']
+# me3= owned_apps[3]['id']
+# api3= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_unique?access_token='+token3
+# print(api3)
+# headers3 = {
+#     'Content-Type': 'application/json'
+#                 }
+# responseprueba3=requests.get(api3,stream=True,headers=headers3)
+# #print(response.url)
+# responseprueba3 = responseprueba3.json()
+# resultadosprueba3=responseprueba3["data"][0]["values"]
+# resultadospruebafinal1=resultadosprueba3[0]["value"]
+############################
 
-#Lifetime Post Total Reach
+# #Lifetime Post organic reach
+# token4 = resultadosprueba[3]['access_token']
+# me3= owned_apps[3]['id']
+# api4= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_organic_unique?access_token='+token4
+# print(api4)
+# headers4 = {
+#     'Content-Type': 'application/json'
+#                 }
+# responseprueba4=requests.get(api4,stream=True,headers=headers4)
+# #print(response.url)
+# responseprueba4 = responseprueba4.json()
+# resultadosprueba4=responseprueba4["data"][0]["values"]
+# resultadospruebafinal2=resultadosprueba4[0]["value"]
+
+
+#####################ITERACION PARA METRICA 2 ################
+#Lifetime Post organic reach
 token3 = resultadosprueba[3]['access_token']
-me3= owned_apps[3]['id']
-api3= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_unique?access_token='+token3
-print(api3)
 headers3 = {
     'Content-Type': 'application/json'
                 }
-responseprueba3=requests.get(api3,stream=True,headers=headers3)
-#print(response.url)
-responseprueba3 = responseprueba3.json()
-resultadosprueba3=responseprueba3["data"][0]["values"]
-resultadospruebafinal1=resultadosprueba3[0]["value"]
+item2=0
+listaReach=[]
+while item2 <= len(owned_apps):
+    resultadosprueba_2=[]
+    ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
+    api=""
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_organic_unique?access_token='+token3
+    print(api)
+    responseprueba_2=requests.get(api,
+                                 stream=True,
+                                 headers=headers3)
+    responseprueba_2 = responseprueba_2.json()
+    resultadosprueba_2=responseprueba_2["data"][0]["values"]
+    resultadospruebafinal_2=resultadosprueba_2[0]["value"]
+    fechapub11=owned_apps[item2]['created_time']
+    id_22=owned_apps[item2]['id']
+    titulo22=owned_apps[item2]['message']
+    listaReach.append( ##formato para agregar a una lista de forma manual
+        {
+             "Fecha Publicación":fechapub11,
+             "ID Publicación":id_22,
+             "Título Publicación":titulo22,
+             "Lifetime Post organic reach":resultadospruebafinal_2,
+        }
+    )
+    item2+=1
+    if item2==len(owned_apps):
+        print(item2)
+        break
+##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
+asdq=pd.DataFrame(listaReach)
+asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post organic reach"],index=False,startcol=4)
 
 
-#Lifetime Post organic reach
-token4 = resultadosprueba[3]['access_token']
-me3= owned_apps[3]['id']
-api4= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_organic_unique?access_token='+token4
-print(api4)
-headers4 = {
-    'Content-Type': 'application/json'
-                }
-responseprueba4=requests.get(api4,stream=True,headers=headers4)
-#print(response.url)
-responseprueba4 = responseprueba4.json()
-resultadosprueba4=responseprueba4["data"][0]["values"]
-resultadospruebafinal2=resultadosprueba4[0]["value"]
 
+# #Lifetime Post Paid Reach
+# token5 = resultadosprueba[3]['access_token']
+# me3= owned_apps[3]['id']
+# api5= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_paid_unique?access_token='+token5
+# print(api5)
+# headers5 = {
+#     'Content-Type': 'application/json'
+#                 }
+# responseprueba5=requests.get(api5,stream=True,headers=headers5)
+# #print(response.url)
+# responseprueba5 = responseprueba5.json()
+# resultadosprueba5=responseprueba5["data"][0]["values"]
+# resultadospruebafinal3=resultadosprueba5[0]["value"]
+
+#####################ITERACION PARA METRICA 3 ################
 #Lifetime Post Paid Reach
-token5 = resultadosprueba[3]['access_token']
-me3= owned_apps[3]['id']
-api5= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_paid_unique?access_token='+token5
-print(api5)
-headers5 = {
+token3 = resultadosprueba[3]['access_token']
+headers3 = {
     'Content-Type': 'application/json'
                 }
-responseprueba5=requests.get(api5,stream=True,headers=headers5)
-#print(response.url)
-responseprueba5 = responseprueba5.json()
-resultadosprueba5=responseprueba5["data"][0]["values"]
-resultadospruebafinal3=resultadosprueba5[0]["value"]
+item2=0
+listaReach=[]
+while item2 <= len(owned_apps):
+    resultadosprueba_3=[]
+    ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
+    api=""
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_impressions_paid_unique?access_token='+token3
+    print(api)
+    responseprueba_3=requests.get(api,
+                                 stream=True,
+                                 headers=headers3)
+    responseprueba_3 = responseprueba_3.json()
+    resultadosprueba_3=responseprueba_3["data"][0]["values"]
+    resultadospruebafinal_3=resultadosprueba_3[0]["value"]
+    fechapub11=owned_apps[item2]['created_time']
+    id_22=owned_apps[item2]['id']
+    titulo22=owned_apps[item2]['message']
+    listaReach.append( ##formato para agregar a una lista de forma manual
+        {
+             "Fecha Publicación":fechapub11,
+             "ID Publicación":id_22,
+             "Título Publicación":titulo22,
+             "Lifetime Post Paid Reach":resultadospruebafinal_3,
+        }
+    )
+    item2+=1
+    if item2==len(owned_apps):
+        print(item2)
+        break
+##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
+asdq=pd.DataFrame(listaReach)
+asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Paid Reach"],index=False,startcol=4)
 
+
+
+# #Lifetime Post Total Impressions
+# token6 = resultadosprueba[3]['access_token']
+# me3= owned_apps[3]['id']
+# api6= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions?access_token='+token6
+# print(api6)
+# headers6 = {
+#     'Content-Type': 'application/json'
+#                 }
+# responseprueba6=requests.get(api6,stream=True,headers=headers6)
+# #print(response.url)
+# responseprueba6 = responseprueba6.json()
+# resultadosprueba6=responseprueba6["data"][0]["values"]
+# resultadospruebafinal4=resultadosprueba6[0]["value"]
+
+
+#####################ITERACION PARA METRICA 4 ################
 #Lifetime Post Total Impressions
-token6 = resultadosprueba[3]['access_token']
-me3= owned_apps[3]['id']
-api6= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions?access_token='+token6
-print(api6)
-headers6 = {
+token3 = resultadosprueba[3]['access_token']
+headers3 = {
     'Content-Type': 'application/json'
                 }
-responseprueba6=requests.get(api6,stream=True,headers=headers6)
-#print(response.url)
-responseprueba6 = responseprueba6.json()
-resultadosprueba6=responseprueba6["data"][0]["values"]
-resultadospruebafinal4=resultadosprueba6[0]["value"]
+item2=0
+listaReach=[]
+while item2 <= len(owned_apps):
+    resultadosprueba_4=[]
+    ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
+    api=""
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_impressions?access_token='+token3
+    print(api)
+    responseprueba_4=requests.get(api,
+                                 stream=True,
+                                 headers=headers3)
+    responseprueba_4 = responseprueba_4.json()
+    resultadosprueba_4=responseprueba_4["data"][0]["values"]
+    resultadospruebafinal_4=resultadosprueba_4[0]["value"]
+    fechapub11=owned_apps[item2]['created_time']
+    id_22=owned_apps[item2]['id']
+    titulo22=owned_apps[item2]['message']
+    listaReach.append( ##formato para agregar a una lista de forma manual
+        {
+             "Fecha Publicación":fechapub11,
+             "ID Publicación":id_22,
+             "Título Publicación":titulo22,
+             "Lifetime Post Total Impressions":resultadospruebafinal_4,
+        }
+    )
+    item2+=1
+    if item2==len(owned_apps):
+        print(item2)
+        break
+##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
+asdq=pd.DataFrame(listaReach)
+asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total Impressions"],index=False,startcol=4)
 
+
+# #Lifetime Post Total organic Impressions
+# token7 = resultadosprueba[3]['access_token']
+# me3= owned_apps[3]['id']
+# api7= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_organic?access_token='+token7
+# print(api7)
+# headers7 = {
+#     'Content-Type': 'application/json'
+#                 }
+# responseprueba7=requests.get(api7,stream=True,headers=headers7)
+# #print(response.url)
+# responseprueba7 = responseprueba7.json()
+# resultadosprueba7=responseprueba7["data"][0]["values"]
+# resultadospruebafinal5=resultadosprueba7[0]["value"]
+
+#####################ITERACION PARA METRICA 5 ################
 #Lifetime Post Total organic Impressions
-token7 = resultadosprueba[3]['access_token']
-me3= owned_apps[3]['id']
-api7= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_organic?access_token='+token7
-print(api7)
-headers7 = {
+token3 = resultadosprueba[3]['access_token']
+headers3 = {
     'Content-Type': 'application/json'
                 }
-responseprueba7=requests.get(api7,stream=True,headers=headers7)
-#print(response.url)
-responseprueba7 = responseprueba7.json()
-resultadosprueba7=responseprueba7["data"][0]["values"]
-resultadospruebafinal5=resultadosprueba7[0]["value"]
+item2=0
+listaReach=[]
+while item2 <= len(owned_apps):
+    resultadosprueba_5=[]
+    ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
+    api=""
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_impressions_organic?access_token='+token3
+    print(api)
+    responseprueba_5=requests.get(api,
+                                 stream=True,
+                                 headers=headers3)
+    responseprueba_5 = responseprueba_5.json()
+    resultadosprueba_5=responseprueba_5["data"][0]["values"]
+    resultadospruebafinal_5=resultadosprueba_5[0]["value"]
+    fechapub11=owned_apps[item2]['created_time']
+    id_22=owned_apps[item2]['id']
+    titulo22=owned_apps[item2]['message']
+    listaReach.append( ##formato para agregar a una lista de forma manual
+        {
+             "Fecha Publicación":fechapub11,
+             "ID Publicación":id_22,
+             "Título Publicación":titulo22,
+             "Lifetime Post Total organic Impressions":resultadospruebafinal_5,
+        }
+    )
+    item2+=1
+    if item2==len(owned_apps):
+        print(item2)
+        break
+##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
+asdq=pd.DataFrame(listaReach)
+asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total organic Impressions"],index=False,startcol=4)
 
+
+# #Lifetime Post Total Paid Impressions
+# token8 = resultadosprueba[3]['access_token']
+# me3= owned_apps[3]['id']
+# api8= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_paid?access_token='+token8
+# print(api8)
+# headers8 = {
+#     'Content-Type': 'application/json'
+#                 }
+# responseprueba8=requests.get(api8,stream=True,headers=headers8)
+# #print(response.url)
+# responseprueba8 = responseprueba8.json()
+# resultadosprueba8=responseprueba8["data"][0]["values"]
+# resultadospruebafinal6=resultadosprueba8[0]["value"]
+
+#####################ITERACION PARA METRICA 6 ################
 #Lifetime Post Total Paid Impressions
-token8 = resultadosprueba[3]['access_token']
-me3= owned_apps[3]['id']
-api8= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_impressions_paid?access_token='+token8
-print(api8)
-headers8 = {
+token3 = resultadosprueba[3]['access_token']
+headers3 = {
     'Content-Type': 'application/json'
                 }
-responseprueba8=requests.get(api8,stream=True,headers=headers8)
-#print(response.url)
-responseprueba8 = responseprueba8.json()
-resultadosprueba8=responseprueba8["data"][0]["values"]
-resultadospruebafinal6=resultadosprueba8[0]["value"]
+item2=0
+listaReach=[]
+while item2 <= len(owned_apps):
+    resultadosprueba_6=[]
+    ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
+    api=""
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_impressions_paid?access_token='+token3
+    print(api)
+    responseprueba_6=requests.get(api,
+                                 stream=True,
+                                 headers=headers3)
+    responseprueba_6 = responseprueba_6.json()
+    resultadosprueba_6=responseprueba_6["data"][0]["values"]
+    resultadospruebafinal_6=resultadosprueba_6[0]["value"]
+    fechapub11=owned_apps[item2]['created_time']
+    id_22=owned_apps[item2]['id']
+    titulo22=owned_apps[item2]['message']
+    listaReach.append( ##formato para agregar a una lista de forma manual
+        {
+             "Fecha Publicación":fechapub11,
+             "ID Publicación":id_22,
+             "Título Publicación":titulo22,
+             "Lifetime Post Total Paid Impressions":resultadospruebafinal_6,
+        }
+    )
+    item2+=1
+    if item2==len(owned_apps):
+        print(item2)
+        break
+##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
+asdq=pd.DataFrame(listaReach)
+asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total Paid Impressions"],index=False,startcol=4)
 
+
+# #Lifetime Engaged Users
+# token9 = resultadosprueba[3]['access_token']
+# me3= owned_apps[3]['id']
+# api9= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_engaged_users?access_token='+token9
+# print(api9)
+# headers9 = {
+#     'Content-Type': 'application/json'
+#                 }
+# responseprueba9=requests.get(api9,stream=True,headers=headers9)
+# #print(response.url)
+# responseprueba9 = responseprueba9.json()
+# resultadosprueba9=responseprueba9["data"][0]["values"]
+# resultadospruebafinal7=resultadosprueba9[0]["value"]
+
+#####################ITERACION PARA METRICA 7 ################
 #Lifetime Engaged Users
-token9 = resultadosprueba[3]['access_token']
-me3= owned_apps[3]['id']
-api9= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_engaged_users?access_token='+token9
-print(api9)
-headers9 = {
+token3 = resultadosprueba[3]['access_token']
+headers3 = {
     'Content-Type': 'application/json'
                 }
-responseprueba9=requests.get(api9,stream=True,headers=headers9)
-#print(response.url)
-responseprueba9 = responseprueba9.json()
-resultadosprueba9=responseprueba9["data"][0]["values"]
-resultadospruebafinal7=resultadosprueba9[0]["value"]
+item2=0
+listaReach=[]
+while item2 <= len(owned_apps):
+    resultadosprueba_7=[]
+    ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
+    api=""
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_engaged_users?access_token='+token3
+    print(api)
+    responseprueba_7=requests.get(api,
+                                 stream=True,
+                                 headers=headers3)
+    responseprueba_7 = responseprueba_7.json()
+    resultadosprueba_7=responseprueba_7["data"][0]["values"]
+    resultadospruebafinal_7=resultadosprueba_7[0]["value"]
+    fechapub11=owned_apps[item2]['created_time']
+    id_22=owned_apps[item2]['id']
+    titulo22=owned_apps[item2]['message']
+    listaReach.append( ##formato para agregar a una lista de forma manual
+        {
+             "Fecha Publicación":fechapub11,
+             "ID Publicación":id_22,
+             "Título Publicación":titulo22,
+             "Lifetime Engaged Users":resultadospruebafinal_7,
+        }
+    )
+    item2+=1
+    if item2==len(owned_apps):
+        print(item2)
+        break
+##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
+asdq=pd.DataFrame(listaReach)
+asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Engaged Users"],index=False,startcol=4)
 
+
+# #Lifetime Negative Feedback from Users
+# token10 = resultadosprueba[3]['access_token']
+# me3= owned_apps[3]['id']
+# api10= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_negative_feedback_unique?access_token='+token10
+# print(api10)
+# headers10 = {
+#     'Content-Type': 'application/json'
+#                 }
+# responseprueba10=requests.get(api10,stream=True,headers=headers10)
+# #print(response.url)
+# responseprueba10 = responseprueba10.json()
+# resultadosprueba10=responseprueba10["data"][0]["values"]
+# resultadospruebafinal8=resultadosprueba10[0]["value"]
+
+
+#####################ITERACION PARA METRICA 8 ################
 #Lifetime Negative Feedback from Users
-token10 = resultadosprueba[3]['access_token']
-me3= owned_apps[3]['id']
-api10= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_negative_feedback_unique?access_token='+token10
-print(api10)
-headers10 = {
+token3 = resultadosprueba[3]['access_token']
+headers3 = {
     'Content-Type': 'application/json'
                 }
-responseprueba10=requests.get(api10,stream=True,headers=headers10)
-#print(response.url)
-responseprueba10 = responseprueba10.json()
-resultadosprueba10=responseprueba10["data"][0]["values"]
-resultadospruebafinal8=resultadosprueba10[0]["value"]
+item2=0
+listaReach=[]
+while item2 <= len(owned_apps):
+    resultadosprueba_8=[]
+    ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
+    api=""
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_negative_feedback_unique?access_token='+token3
+    print(api)
+    responseprueba_8=requests.get(api,
+                                 stream=True,
+                                 headers=headers3)
+    responseprueba_8 = responseprueba_8.json()
+    resultadosprueba_8=responseprueba_8["data"][0]["values"]
+    resultadospruebafinal_8=resultadosprueba_8[0]["value"]
+    fechapub11=owned_apps[item2]['created_time']
+    id_22=owned_apps[item2]['id']
+    titulo22=owned_apps[item2]['message']
+    listaReach.append( ##formato para agregar a una lista de forma manual
+        {
+             "Fecha Publicación":fechapub11,
+             "ID Publicación":id_22,
+             "Título Publicación":titulo22,
+             "Lifetime Negative Feedback from Users":resultadospruebafinal_8,
+        }
+    )
+    item2+=1
+    if item2==len(owned_apps):
+        print(item2)
+        break
+##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
+asdq=pd.DataFrame(listaReach)
+asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback from Users"],index=False,startcol=4)
 
 
+# #Lifetime Negative Feedback
+# token11 = resultadosprueba[3]['access_token']
+# me3= owned_apps[3]['id']
+# api11= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_negative_feedback?access_token='+token11
+# print(api11)
+# headers11 = {
+#     'Content-Type': 'application/json'
+#                 }
+# responseprueba11=requests.get(api11,stream=True,headers=headers11)
+# #print(response.url)
+# responseprueba11 = responseprueba11.json()
+# resultadosprueba11=responseprueba11["data"][0]["values"]
+# resultadospruebafinal9=resultadosprueba11[0]["value"]
+
+#####################ITERACION PARA METRICA 9 ################
 #Lifetime Negative Feedback
-token11 = resultadosprueba[3]['access_token']
-me3= owned_apps[3]['id']
-api11= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_negative_feedback?access_token='+token11
-print(api11)
-headers11 = {
+token3 = resultadosprueba[3]['access_token']
+headers3 = {
     'Content-Type': 'application/json'
                 }
-responseprueba11=requests.get(api11,stream=True,headers=headers11)
-#print(response.url)
-responseprueba11 = responseprueba11.json()
-resultadosprueba11=responseprueba11["data"][0]["values"]
-resultadospruebafinal9=resultadosprueba11[0]["value"]
+item2=0
+listaReach=[]
+while item2 <= len(owned_apps):
+    resultadosprueba_9=[]
+    ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
+    api=""
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_negative_feedback?access_token='+token3
+    print(api)
+    responseprueba_9=requests.get(api,
+                                 stream=True,
+                                 headers=headers3)
+    responseprueba_9 = responseprueba_9.json()
+    resultadosprueba_9=responseprueba_9["data"][0]["values"]
+    resultadospruebafinal_9=resultadosprueba_9[0]["value"]
+    fechapub11=owned_apps[item2]['created_time']
+    id_22=owned_apps[item2]['id']
+    titulo22=owned_apps[item2]['message']
+    listaReach.append( ##formato para agregar a una lista de forma manual
+        {
+             "Fecha Publicación":fechapub11,
+             "ID Publicación":id_22,
+             "Título Publicación":titulo22,
+             "Lifetime Negative Feedback":resultadospruebafinal_9,
+        }
+    )
+    item2+=1
+    if item2==len(owned_apps):
+        print(item2)
+        break
+##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
+asdq=pd.DataFrame(listaReach)
+asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback"],index=False,startcol=4)
 
 
+# #Reacciones
+# token13 = resultadosprueba[3]['access_token']
+# me3= owned_apps[0]['id']
+# api13= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_reactions_by_type_total?access_token='+token13
+# print(api13)
+# headers13 = {
+#     'Content-Type': 'application/json'
+#                 }
+# responseprueba13=requests.get(api13,stream=True,headers=headers13)
+# #print(response.url)
+# responseprueba13 = responseprueba13.json()
+# resultadosprueba13=responseprueba13["data"][0]["values"]
+# resultadospruebafinal11=resultadosprueba13[0]["value"]
+# anger=resultadospruebafinal11["anger"]
+# haha=resultadospruebafinal11["haha"]
+# like=resultadospruebafinal11["like"]
+# love=resultadospruebafinal11["love"]
+# sorry=resultadospruebafinal11["sorry"]
+# wow=resultadospruebafinal11["wow"]
+
+#####################ITERACION PARA METRICA 10 ################
 #Reacciones
-token13 = resultadosprueba[3]['access_token']
-me3= owned_apps[0]['id']
-api13= "https://graph.facebook.com/"+'v10.0'+'/'+me3+'/insights/post_reactions_by_type_total?access_token='+token13
-print(api13)
-headers13 = {
+token3 = resultadosprueba[3]['access_token']
+headers3 = {
     'Content-Type': 'application/json'
                 }
-responseprueba13=requests.get(api13,stream=True,headers=headers13)
-#print(response.url)
-responseprueba13 = responseprueba13.json()
-resultadosprueba13=responseprueba13["data"][0]["values"]
-resultadospruebafinal11=resultadosprueba13[0]["value"]
-anger=resultadospruebafinal11["anger"]
-haha=resultadospruebafinal11["haha"]
-like=resultadospruebafinal11["like"]
-love=resultadospruebafinal11["love"]
-sorry=resultadospruebafinal11["sorry"]
-wow=resultadospruebafinal11["wow"]
-
+item2=0
+listaReach=[]
+while item2 <= len(owned_apps):
+    resultadosprueba_10=[]
+    ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
+    api=""
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_reactions_by_type_total?access_token='+token3
+    print(api)
+    responseprueba_10=requests.get(api,
+                                 stream=True,
+                                 headers=headers3)
+    responseprueba_10 = responseprueba_10.json()
+    resultadosprueba_10=responseprueba_10["data"][0]["values"]
+    resultadospruebafinal_10=resultadosprueba_10[0]["value"]
+    anger=resultadosprueba_10["anger"]
+    haha=resultadosprueba_10["haha"]
+    like=resultadosprueba_10["like"]
+    love=resultadosprueba_10["love"]
+    sorry=resultadosprueba_10["sorry"]
+    wow=resultadosprueba_10["wow"]
+    fechapub11=owned_apps[item2]['created_time']
+    id_22=owned_apps[item2]['id']
+    titulo22=owned_apps[item2]['message']
+    listaReach.append( ##formato para agregar a una lista de forma manual
+        {
+             "Fecha Publicación":fechapub11,
+             "ID Publicación":id_22,
+             "Título Publicación":titulo22,
+             "Like":like,
+             "Me Encanta":love,
+             "Me Entristece":sorry,
+             "Me Asombra":wow,
+             "Me Enfada":anger,
+             "Me Divierte":haha,
+        }
+    )
+    item2+=1
+    if item2==len(owned_apps):
+        print(item2)
+        break
+##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
+asdq=pd.DataFrame(listaReach)
+asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback"],index=False,startcol=4)
 
 
 # #Link clicks
@@ -306,22 +679,22 @@ wow=resultadospruebafinal11["wow"]
 
 
 
-listafinal2=[]
-listafinal2 = {'Resultados' : pd.Series([cantidad,resultadospruebafinal1,resultadospruebafinal2,
-                                         resultadospruebafinal3,resultadospruebafinal4,
-                                         resultadospruebafinal5,resultadospruebafinal6,
-                                         resultadospruebafinal7,resultadospruebafinal8,
-                                         resultadospruebafinal9,resultadospruebafinal10,
-                                         resultadospruebafinal11,resultadospruebafinal12,
-                                         resultadospruebafinal13], index =['Cantidad de publicaciones',
-                                        'Lifetime Post Total Reach','Lifetime Post organic reach',
-                                        'Lifetime Post Paid Reach','Lifetime Post Total Impressions',
-                                        'Lifetime Post Organic Impressions','Lifetime Post Paid Impressions',
-                                        'Lifetime Engaged Users','Lifetime Negative Feedback from Users',
-                                        'Lifetime Negative Feedback','Like','Link clicks','Visualizaciones de video totales Total',
-                                        'Reproducciones totales de 30 segundos Total'])}
+# listafinal2=[]
+# listafinal2 = {'Resultados' : pd.Series([cantidad,resultadospruebafinal1,resultadospruebafinal2,
+#                                          resultadospruebafinal3,resultadospruebafinal4,
+#                                          resultadospruebafinal5,resultadospruebafinal6,
+#                                          resultadospruebafinal7,resultadospruebafinal8,
+#                                          resultadospruebafinal9,resultadospruebafinal10,
+#                                          resultadospruebafinal11,resultadospruebafinal12,
+#                                          resultadospruebafinal13], index =['Cantidad de publicaciones',
+#                                         'Lifetime Post Total Reach','Lifetime Post organic reach',
+#                                         'Lifetime Post Paid Reach','Lifetime Post Total Impressions',
+#                                         'Lifetime Post Organic Impressions','Lifetime Post Paid Impressions',
+#                                         'Lifetime Engaged Users','Lifetime Negative Feedback from Users',
+#                                         'Lifetime Negative Feedback','Like','Link clicks','Visualizaciones de video totales Total',
+#                                         'Reproducciones totales de 30 segundos Total'])}
 
-dataframefinal = pd.DataFrame(listafinal2)
+# dataframefinal = pd.DataFrame(listafinal2)
 
-dataframefinal.to_excel('Indicadores.xlsx', sheet_name='DetallePagina',index=True)
+# dataframefinal.to_excel('Indicadores.xlsx', sheet_name='DetallePagina',index=True)
 subir_archivo('Indicadores.xlsx','1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
