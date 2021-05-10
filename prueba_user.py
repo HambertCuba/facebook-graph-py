@@ -89,7 +89,22 @@ while after:
 
 #cantidad de publicaciones
 cantidad=len(owned_apps)
-
+aaa=pd.DataFrame(owned_apps)
+listatemp=[]
+for i in owned_apps:
+    ##print(i["message"])
+    created_time=i["created_time"]
+    idpub=i["id"]
+    titulo_pub=str(i["message"])
+    listatemp.append( ##formato para agregar a una lista de forma manual
+        {
+             "fecha_pub":created_time,
+             "id_pub":id,
+             "titulo_pub":titulo_pub,
+        }
+    )
+asd=pd.DataFrame(listatemp)
+print(len(asd.index))
 
 #######################parametros para la pagina
 #Lifetime Post Total Reach
