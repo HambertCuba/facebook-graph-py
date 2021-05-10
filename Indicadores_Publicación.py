@@ -108,7 +108,10 @@ listaReach=[]
 while item2 <= len(owned_apps):
     resultadosprueba3=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
-    responseprueba3=requests.get("https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_unique?access_token='+token3,
+    api=""
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_unique?access_token='+token3
+    print(api)
+    responseprueba3=requests.get(api,
                                  stream=True,
                                  headers=headers3)
     responseprueba3 = responseprueba3.json()
@@ -129,9 +132,9 @@ while item2 <= len(owned_apps):
     if item2==len(owned_apps):
         print(item2)
         break
-##########################CREACION DATAFRAME PARA LA METRICA###################
+##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
 asdq=pd.DataFrame(listaReach)
-asdq.to_excel('Indicadores.xlsx', sheet_name='TotalReach',index=False)
+asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total Reach"],index=False,startcol=4)
 
 
 
