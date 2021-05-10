@@ -208,7 +208,7 @@ while item2 <= len(owned_apps):
 listaReachOrganic=pd.DataFrame(listaReachOrganic)
 #asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post organic reach"],index=False,startcol=4)
 
-
+#uniendo dataframe
 listaReach=listaReach.merge(listaReachOrganic,on="ID Publicación",how="left")
 
 # #Lifetime Post Paid Reach
@@ -237,8 +237,8 @@ while item2 <= len(owned_apps):
     resultadosprueba_3=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
-    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_impressions_paid_unique?access_token='+token3
-    print(api)
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_paid_unique?access_token='+token3
+    #print(api)
     responseprueba_3=requests.get(api,
                                  stream=True,
                                  headers=headers3)
@@ -259,10 +259,11 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaReachPaid)
+listaReachPaid=pd.DataFrame(listaReachPaid)
 #asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Paid Reach"],index=False,startcol=4)
 
-
+#uniendo dataframe2
+listaReach=listaReach.merge(listaReachPaid,on="ID Publicación",how="left")
 
 # #Lifetime Post Total Impressions
 # token6 = resultadosprueba[3]['access_token']
@@ -291,8 +292,8 @@ while item2 <= len(owned_apps):
     resultadosprueba_4=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
-    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_impressions?access_token='+token3
-    print(api)
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions?access_token='+token3
+    #print(api)
     responseprueba_4=requests.get(api,
                                  stream=True,
                                  headers=headers3)
@@ -313,8 +314,11 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaImpressions)
-asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total Impressions"],index=False,startcol=4)
+listaImpressions=pd.DataFrame(listaImpressions)
+#asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total Impressions"],index=False,startcol=4)
+
+#uniendo dataframe3
+listaReach=listaReach.merge(listaImpressions,on="ID Publicación",how="left")
 
 
 # #Lifetime Post Total organic Impressions
@@ -343,7 +347,7 @@ while item2 <= len(owned_apps):
     resultadosprueba_5=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
-    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_impressions_organic?access_token='+token3
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_organic?access_token='+token3
     print(api)
     responseprueba_5=requests.get(api,
                                  stream=True,
@@ -365,9 +369,11 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaImpressionsOrganic)
+listaImpressionsOrganic=pd.DataFrame(listaImpressionsOrganic)
 #asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total organic Impressions"],index=False,startcol=4)
 
+#uniendo dataframe4
+listaReach=listaReach.merge(listaImpressionsOrganic,on="ID Publicación",how="left")
 
 # #Lifetime Post Total Paid Impressions
 # token8 = resultadosprueba[3]['access_token']
@@ -395,8 +401,8 @@ while item2 <= len(owned_apps):
     resultadosprueba_6=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
-    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_impressions_paid?access_token='+token3
-    print(api)
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_paid?access_token='+token3
+    #print(api)
     responseprueba_6=requests.get(api,
                                  stream=True,
                                  headers=headers3)
@@ -417,9 +423,11 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaImpressionsPaid)
+listaImpressionsPaid=pd.DataFrame(listaImpressionsPaid)
 #asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total Paid Impressions"],index=False,startcol=4)
 
+#uniendo dataframe5
+listaReach=listaReach.merge(listaImpressionsPaid,on="ID Publicación",how="left")
 
 # #Lifetime Engaged Users
 # token9 = resultadosprueba[3]['access_token']
@@ -447,8 +455,8 @@ while item2 <= len(owned_apps):
     resultadosprueba_7=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
-    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_engaged_users?access_token='+token3
-    print(api)
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_engaged_users?access_token='+token3
+    #print(api)
     responseprueba_7=requests.get(api,
                                  stream=True,
                                  headers=headers3)
@@ -469,9 +477,11 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaEngaged)
+listaEngaged=pd.DataFrame(listaEngaged)
 #asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Engaged Users"],index=False,startcol=4)
 
+#uniendo dataframe6
+listaReach=listaReach.merge(listaEngaged,on="ID Publicación",how="left")
 
 # #Lifetime Negative Feedback from Users
 # token10 = resultadosprueba[3]['access_token']
@@ -500,8 +510,8 @@ while item2 <= len(owned_apps):
     resultadosprueba_8=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
-    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_negative_feedback_unique?access_token='+token3
-    print(api)
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_negative_feedback_unique?access_token='+token3
+    #print(api)
     responseprueba_8=requests.get(api,
                                  stream=True,
                                  headers=headers3)
@@ -522,9 +532,11 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaNegative)
+listaNegative=pd.DataFrame(listaNegative)
 #asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback from Users"],index=False,startcol=4)
 
+#uniendo dataframe7
+listaReach=listaReach.merge(listaNegative,on="ID Publicación",how="left")
 
 # #Lifetime Negative Feedback
 # token11 = resultadosprueba[3]['access_token']
@@ -552,8 +564,8 @@ while item2 <= len(owned_apps):
     resultadosprueba_9=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
-    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_negative_feedback?access_token='+token3
-    print(api)
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_negative_feedback?access_token='+token3
+    #print(api)
     responseprueba_9=requests.get(api,
                                  stream=True,
                                  headers=headers3)
@@ -574,9 +586,11 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaFeedback)
+listaFeedback=pd.DataFrame(listaFeedback)
 #asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback"],index=False,startcol=4)
 
+#uniendo dataframe8
+listaReach=listaReach.merge(listaFeedback,on="ID Publicación",how="left")
 
 # #Reacciones
 # token13 = resultadosprueba[3]['access_token']
@@ -606,24 +620,55 @@ headers3 = {
                 }
 item2=0
 Reacciones=[]
+
 while item2 <= len(owned_apps):
     resultadosprueba_10=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
-    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/post_reactions_by_type_total?access_token='+token3
-    print(api)
+    api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_reactions_by_type_total?access_token='+token3
+    #print(api)
     responseprueba_10=requests.get(api,
                                  stream=True,
                                  headers=headers3)
     responseprueba_10 = responseprueba_10.json()
     resultadosprueba_10=responseprueba_10["data"][0]["values"]
     resultadospruebafinal_10=resultadosprueba_10[0]["value"]
-    anger=resultadosprueba_10["anger"]
-    haha=resultadosprueba_10["haha"]
-    like=resultadosprueba_10["like"]
-    love=resultadosprueba_10["love"]
-    sorry=resultadosprueba_10["sorry"]
-    wow=resultadosprueba_10["wow"]
+    try:
+      anger=resultadospruebafinal_10["anger"]
+    except(ValueError,KeyError,ZeroDivisionError,NameError):
+        print('falla anger')  
+        anger=0
+    
+    try:
+      haha=resultadospruebafinal_10["haha"]
+    except(ValueError,KeyError,ZeroDivisionError,NameError):
+        print('falla haha')  
+        anger=0
+        
+    try:
+      like=resultadospruebafinal_10["like"]
+    except(ValueError,KeyError,ZeroDivisionError,NameError):
+        print('falla like')  
+        like=0
+        
+    try:
+      love=resultadospruebafinal_10["love"]
+    except(ValueError,KeyError,ZeroDivisionError,NameError):
+        print('falla love')  
+        love=0
+     
+    try:
+      sorry=resultadospruebafinal_10["sorry"]
+    except(ValueError,KeyError,ZeroDivisionError,NameError):
+        print('falla sorry')  
+        sorry=0
+    
+    try:
+      wow=resultadospruebafinal_10["wow"]
+    except(ValueError,KeyError,ZeroDivisionError,NameError):
+        print('falla sorry')  
+        wow=0
+    
     fechapub11=owned_apps[item2]['created_time']
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
@@ -643,9 +688,11 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(Reacciones)
+Reacciones=pd.DataFrame(Reacciones)
 #asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback"],index=False,startcol=4)
 
+#uniendo dataframe9
+listaReach=listaReach.merge(Reacciones,on="ID Publicación",how="left")
 
 # #Link clicks
 # token13 = resultadosprueba[3]['access_token']
@@ -662,24 +709,5 @@ asdq=pd.DataFrame(Reacciones)
 # resultadospruebafinal11=resultadosprueba13[0]["value"]
 
 
-
-
-# listafinal2=[]
-# listafinal2 = {'Resultados' : pd.Series([cantidad,resultadospruebafinal1,resultadospruebafinal2,
-#                                          resultadospruebafinal3,resultadospruebafinal4,
-#                                          resultadospruebafinal5,resultadospruebafinal6,
-#                                          resultadospruebafinal7,resultadospruebafinal8,
-#                                          resultadospruebafinal9,resultadospruebafinal10,
-#                                          resultadospruebafinal11,resultadospruebafinal12,
-#                                          resultadospruebafinal13], index =['Cantidad de publicaciones',
-#                                         'Lifetime Post Total Reach','Lifetime Post organic reach',
-#                                         'Lifetime Post Paid Reach','Lifetime Post Total Impressions',
-#                                         'Lifetime Post Organic Impressions','Lifetime Post Paid Impressions',
-#                                         'Lifetime Engaged Users','Lifetime Negative Feedback from Users',
-#                                         'Lifetime Negative Feedback','Like','Link clicks','Visualizaciones de video totales Total',
-#                                         'Reproducciones totales de 30 segundos Total'])}
-
-# dataframefinal = pd.DataFrame(listafinal2)
-
-# dataframefinal.to_excel('Indicadores.xlsx', sheet_name='DetallePagina',index=True)
-subir_archivo('Indicadores.xlsx','1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
+listaReach.to_excel('IndicadoresPublicación.xlsx', sheet_name='DetallePublicación',index=True)
+subir_archivo('IndicadoresPublicación.xlsx','1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
