@@ -643,7 +643,7 @@ while item2 <= len(owned_apps):
       haha=resultadospruebafinal_10["haha"]
     except(ValueError,KeyError,ZeroDivisionError,NameError):
         print('falla haha')  
-        anger=0
+        haha=0
         
     try:
       like=resultadospruebafinal_10["like"]
@@ -710,4 +710,5 @@ listaReach=listaReach.merge(Reacciones,on="ID Publicación",how="left")
 
 
 listaReach.to_excel('IndicadoresPublicación.xlsx', sheet_name='DetallePublicación',index=True)
+
 subir_archivo('IndicadoresPublicación.xlsx','1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
