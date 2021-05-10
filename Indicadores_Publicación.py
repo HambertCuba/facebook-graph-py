@@ -8,7 +8,7 @@ import paramiko
 import shutil
 import logging
 import pprint
-from datetime import datetime, date, time, timedelta
+from datetime import datetime, date, timedelta
 import calendar
 import facebook_business
 import requests, urllib3
@@ -61,7 +61,7 @@ resultados=pd.DataFrame(lista1)
 #####sacar las publicaciones por cada objeto de la lista - cantidad e id del objeto
 token1 = resultadosprueba[3]['access_token']
 me2= resultadosprueba[3]['id']
-api2= "https://graph.facebook.com/"+'v10.0'+'/'+me2+'/'+'published_posts?access_token='+token1+'&period=day&since='+fecha2+'&until='+fecha1+'&limit=100'
+api2= "https://graph.facebook.com/"+'v10.0'+'/'+me2+'/'+'published_posts?access_token='+token1+'&period=day&since='+fecha2+'&until='+fecha2+' 23:59:59&limit=100'
 print(api2)
 headers2 = {
     'Content-Type': 'application/json'
@@ -111,7 +111,7 @@ while item2 <= len(owned_apps):
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
     api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_unique?access_token='+token3
-    print(api)
+    print(api)    
     responseprueba_1=requests.get(api,
                                  stream=True,
                                  headers=headers3)
@@ -134,8 +134,10 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaReach)
-asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total Reach"],index=False,startcol=4)
+listaReach=pd.DataFrame(listaReach)
+#asdq=asdq.insert(4, "Prueba2",asdq.columns[3])
+#asdq.to_excel('Indicadores_v2.xlsx', sheet_name='Metricas',index=False)
+#asdq.to_excel('Indicadores_v3.xlsx', sheet_name='Metricas',columns=["Lifetime Post Total Reach"],index=False,startcol=5)
 
 
 ###########################
@@ -176,7 +178,7 @@ headers3 = {
     'Content-Type': 'application/json'
                 }
 item2=0
-listaReach=[]
+listaReachOrganic=[]
 while item2 <= len(owned_apps):
     resultadosprueba_2=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
@@ -192,11 +194,9 @@ while item2 <= len(owned_apps):
     fechapub11=owned_apps[item2]['created_time']
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
-    listaReach.append( ##formato para agregar a una lista de forma manual
+    listaReachOrganic.append( ##formato para agregar a una lista de forma manual
         {
-             "Fecha Publicación":fechapub11,
              "ID Publicación":id_22,
-             "Título Publicación":titulo22,
              "Lifetime Post organic reach":resultadospruebafinal_2,
         }
     )
@@ -205,10 +205,11 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaReach)
-asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post organic reach"],index=False,startcol=4)
+listaReachOrganic=pd.DataFrame(listaReachOrganic)
+#asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post organic reach"],index=False,startcol=4)
 
 
+listaReach.merge(listaReachOrganic,on="ID Publicación",how="left")
 
 # #Lifetime Post Paid Reach
 # token5 = resultadosprueba[3]['access_token']
@@ -231,7 +232,7 @@ headers3 = {
     'Content-Type': 'application/json'
                 }
 item2=0
-listaReach=[]
+listaReachPaid=[]
 while item2 <= len(owned_apps):
     resultadosprueba_3=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
@@ -247,11 +248,9 @@ while item2 <= len(owned_apps):
     fechapub11=owned_apps[item2]['created_time']
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
-    listaReach.append( ##formato para agregar a una lista de forma manual
+    listaReachPaid.append( ##formato para agregar a una lista de forma manual
         {
-             "Fecha Publicación":fechapub11,
              "ID Publicación":id_22,
-             "Título Publicación":titulo22,
              "Lifetime Post Paid Reach":resultadospruebafinal_3,
         }
     )
@@ -260,8 +259,8 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaReach)
-asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Paid Reach"],index=False,startcol=4)
+asdq=pd.DataFrame(listaReachPaid)
+#asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Paid Reach"],index=False,startcol=4)
 
 
 
@@ -287,7 +286,7 @@ headers3 = {
     'Content-Type': 'application/json'
                 }
 item2=0
-listaReach=[]
+listaImpressions=[]
 while item2 <= len(owned_apps):
     resultadosprueba_4=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
@@ -303,11 +302,9 @@ while item2 <= len(owned_apps):
     fechapub11=owned_apps[item2]['created_time']
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
-    listaReach.append( ##formato para agregar a una lista de forma manual
+    listaImpressions.append( ##formato para agregar a una lista de forma manual
         {
-             "Fecha Publicación":fechapub11,
              "ID Publicación":id_22,
-             "Título Publicación":titulo22,
              "Lifetime Post Total Impressions":resultadospruebafinal_4,
         }
     )
@@ -316,7 +313,7 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaReach)
+asdq=pd.DataFrame(listaImpressions)
 asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total Impressions"],index=False,startcol=4)
 
 
@@ -341,7 +338,7 @@ headers3 = {
     'Content-Type': 'application/json'
                 }
 item2=0
-listaReach=[]
+listaImpressionsOrganic=[]
 while item2 <= len(owned_apps):
     resultadosprueba_5=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
@@ -357,11 +354,9 @@ while item2 <= len(owned_apps):
     fechapub11=owned_apps[item2]['created_time']
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
-    listaReach.append( ##formato para agregar a una lista de forma manual
+    listaImpressionsOrganic.append( ##formato para agregar a una lista de forma manual
         {
-             "Fecha Publicación":fechapub11,
              "ID Publicación":id_22,
-             "Título Publicación":titulo22,
              "Lifetime Post Total organic Impressions":resultadospruebafinal_5,
         }
     )
@@ -370,8 +365,8 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaReach)
-asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total organic Impressions"],index=False,startcol=4)
+asdq=pd.DataFrame(listaImpressionsOrganic)
+#asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total organic Impressions"],index=False,startcol=4)
 
 
 # #Lifetime Post Total Paid Impressions
@@ -395,7 +390,7 @@ headers3 = {
     'Content-Type': 'application/json'
                 }
 item2=0
-listaReach=[]
+listaImpressionsPaid=[]
 while item2 <= len(owned_apps):
     resultadosprueba_6=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
@@ -411,11 +406,9 @@ while item2 <= len(owned_apps):
     fechapub11=owned_apps[item2]['created_time']
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
-    listaReach.append( ##formato para agregar a una lista de forma manual
+    listaImpressionsPaid.append( ##formato para agregar a una lista de forma manual
         {
-             "Fecha Publicación":fechapub11,
              "ID Publicación":id_22,
-             "Título Publicación":titulo22,
              "Lifetime Post Total Paid Impressions":resultadospruebafinal_6,
         }
     )
@@ -424,8 +417,8 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaReach)
-asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total Paid Impressions"],index=False,startcol=4)
+asdq=pd.DataFrame(listaImpressionsPaid)
+#asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Post Total Paid Impressions"],index=False,startcol=4)
 
 
 # #Lifetime Engaged Users
@@ -449,7 +442,7 @@ headers3 = {
     'Content-Type': 'application/json'
                 }
 item2=0
-listaReach=[]
+listaEngaged=[]
 while item2 <= len(owned_apps):
     resultadosprueba_7=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
@@ -465,11 +458,9 @@ while item2 <= len(owned_apps):
     fechapub11=owned_apps[item2]['created_time']
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
-    listaReach.append( ##formato para agregar a una lista de forma manual
+    listaEngaged.append( ##formato para agregar a una lista de forma manual
         {
-             "Fecha Publicación":fechapub11,
              "ID Publicación":id_22,
-             "Título Publicación":titulo22,
              "Lifetime Engaged Users":resultadospruebafinal_7,
         }
     )
@@ -478,8 +469,8 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaReach)
-asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Engaged Users"],index=False,startcol=4)
+asdq=pd.DataFrame(listaEngaged)
+#asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Engaged Users"],index=False,startcol=4)
 
 
 # #Lifetime Negative Feedback from Users
@@ -504,7 +495,7 @@ headers3 = {
     'Content-Type': 'application/json'
                 }
 item2=0
-listaReach=[]
+listaNegative=[]
 while item2 <= len(owned_apps):
     resultadosprueba_8=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
@@ -520,11 +511,9 @@ while item2 <= len(owned_apps):
     fechapub11=owned_apps[item2]['created_time']
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
-    listaReach.append( ##formato para agregar a una lista de forma manual
+    listaNegative.append( ##formato para agregar a una lista de forma manual
         {
-             "Fecha Publicación":fechapub11,
              "ID Publicación":id_22,
-             "Título Publicación":titulo22,
              "Lifetime Negative Feedback from Users":resultadospruebafinal_8,
         }
     )
@@ -533,8 +522,8 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaReach)
-asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback from Users"],index=False,startcol=4)
+asdq=pd.DataFrame(listaNegative)
+#asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback from Users"],index=False,startcol=4)
 
 
 # #Lifetime Negative Feedback
@@ -558,7 +547,7 @@ headers3 = {
     'Content-Type': 'application/json'
                 }
 item2=0
-listaReach=[]
+listaFeedback=[]
 while item2 <= len(owned_apps):
     resultadosprueba_9=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
@@ -574,11 +563,9 @@ while item2 <= len(owned_apps):
     fechapub11=owned_apps[item2]['created_time']
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
-    listaReach.append( ##formato para agregar a una lista de forma manual
+    listaFeedback.append( ##formato para agregar a una lista de forma manual
         {
-             "Fecha Publicación":fechapub11,
              "ID Publicación":id_22,
-             "Título Publicación":titulo22,
              "Lifetime Negative Feedback":resultadospruebafinal_9,
         }
     )
@@ -587,8 +574,8 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaReach)
-asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback"],index=False,startcol=4)
+asdq=pd.DataFrame(listaFeedback)
+#asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback"],index=False,startcol=4)
 
 
 # #Reacciones
@@ -618,7 +605,7 @@ headers3 = {
     'Content-Type': 'application/json'
                 }
 item2=0
-listaReach=[]
+Reacciones=[]
 while item2 <= len(owned_apps):
     resultadosprueba_10=[]
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
@@ -640,11 +627,9 @@ while item2 <= len(owned_apps):
     fechapub11=owned_apps[item2]['created_time']
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
-    listaReach.append( ##formato para agregar a una lista de forma manual
+    Reacciones.append( ##formato para agregar a una lista de forma manual
         {
-             "Fecha Publicación":fechapub11,
              "ID Publicación":id_22,
-             "Título Publicación":titulo22,
              "Like":like,
              "Me Encanta":love,
              "Me Entristece":sorry,
@@ -658,8 +643,8 @@ while item2 <= len(owned_apps):
         print(item2)
         break
 ##########################CREACION PRUEBA DATAFRAME PARA LA METRICA###################
-asdq=pd.DataFrame(listaReach)
-asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback"],index=False,startcol=4)
+asdq=pd.DataFrame(Reacciones)
+#asdq.to_excel('PruebaCelda2.xlsx', sheet_name='TotalReach',columns=["Lifetime Negative Feedback"],index=False,startcol=4)
 
 
 # #Link clicks
