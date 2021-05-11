@@ -18,14 +18,18 @@ from openpyxl import Workbook
 import xlsxwriter
 import pydrive2
 from googledrive import subir_archivo
+from openpyxl import load_workbook
+from openpyxl.workbook import Workbook
 
 #sacar las fechas de filtro
 formato1="%Y-%m-%d"
+formato2="%y-%m-%d"
 now = datetime.today()
 fecha_atras = now - timedelta(days=1)
 #print(fecha_atras)
 fecha1=now.strftime(formato1)
 fecha2=fecha_atras.strftime(formato1)
+fecha3=fecha_atras.strftime(formato2)
 #print(fecha2)
 
 #sacar la cuenta de facebook:id y token
@@ -119,6 +123,8 @@ while item2 <= len(owned_apps):
     resultadosprueba_1=responseprueba_1["data"][0]["values"]
     resultadospruebafinal_1=resultadosprueba_1[0]["value"]
     fechapub11=owned_apps[item2]['created_time']
+    fechapub11=fechapub11.replace("T"," ")
+    fechapub11=fechapub11[0:19]
     id_22=owned_apps[item2]['id']
     titulo22=owned_apps[item2]['message']
     listaReach.append( ##formato para agregar a una lista de forma manual
@@ -709,6 +715,18 @@ listaReach=listaReach.merge(Reacciones,on="ID Publicación",how="left")
 # resultadospruebafinal11=resultadosprueba13[0]["value"]
 
 
-listaReach.to_excel('IndicadoresPublicación.xlsx', sheet_name='DetallePublicación',index=True)
+#agregar al excel ya creado
+nombrearchivo="Indicadores_"+fecha3+'.xlsx'
+book = load_workbook(nombrearchivo)
+writer = pandas.ExcelWriter('Indicadores.xlsx')#, engine='openpyxl') 
+writer.book = book
+writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
+listaReach.to_excel(writer, 'Indicadores_Publicación',index=False)
+writer.save()
 
-subir_archivo('IndicadoresPublicación.xlsx','1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
+
+#subir a Drive
+subir_archivo('Indicadores.xlsx','1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
+
+
+

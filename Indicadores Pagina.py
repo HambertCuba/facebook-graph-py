@@ -21,11 +21,13 @@ from googledrive import subir_archivo
 
 #sacar las fechas de filtro
 formato1="%Y-%m-%d"
+formato2="%y-%m-%d"
 now = datetime.today()
 fecha_atras = now - timedelta(days=1)
 #print(fecha_atras)
 fecha1=now.strftime(formato1)
 fecha2=fecha_atras.strftime(formato1)
+fecha3=fecha_atras.strftime(formato2)
 #print(fecha2)
 
 #sacar la cuenta de facebook:id y token
@@ -61,7 +63,7 @@ resultados=pd.DataFrame(lista1)
 #####sacar las publicaciones por cada objeto de la lista - cantidad e id del objeto
 token1 = resultadosprueba[3]['access_token']
 me2= resultadosprueba[3]['id']
-api2= "https://graph.facebook.com/"+'v10.0'+'/'+me2+'/'+'published_posts?access_token='+token1+'&period=day&since='+fecha2+'&until='+fecha1+'&limit=100'
+api2= "https://graph.facebook.com/"+'v10.0'+'/'+me2+'/'+'published_posts?access_token='+token1+'&period=day&since='+fecha2+'&until='+fecha2+' 23:59:59&limit=100'
 print(api2)
 headers2 = {
     'Content-Type': 'application/json'
@@ -295,6 +297,7 @@ listafinal2 = {'Resultados' : pd.Series([cantidad,resultadospruebafinal1,resulta
                                         'Reproducciones totales de 30 segundos Total'])}
 
 dataframefinal = pd.DataFrame(listafinal2)
+nombrearchivo="Indicadores_"+fecha3+'.xlsx'
 
-dataframefinal.to_excel('Indicadores.xlsx', sheet_name='DetallePagina',index=True)
+dataframefinal.to_excel(nombrearchivo, sheet_name='IndicadoresPagina',index=True)
 subir_archivo('Indicadores.xlsx','1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
