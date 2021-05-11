@@ -115,7 +115,7 @@ while item2 <= len(owned_apps):
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
     api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_unique?access_token='+token3
-    print(api)    
+    #print(api)    
     responseprueba_1=requests.get(api,
                                  stream=True,
                                  headers=headers3)
@@ -190,7 +190,7 @@ while item2 <= len(owned_apps):
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
     api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_organic_unique?access_token='+token3
-    print(api)
+    #print(api)
     responseprueba_2=requests.get(api,
                                  stream=True,
                                  headers=headers3)
@@ -354,7 +354,7 @@ while item2 <= len(owned_apps):
     ##api3= "https://graph.facebook.com/"+'v10.0'+'/'+listatemp[item2]['id_pub']+'/insights/post_impressions_unique?access_token='+token3
     api=""
     api="https://graph.facebook.com/"+'v10.0'+'/'+owned_apps[item2]['id']+'/insights/post_impressions_organic?access_token='+token3
-    print(api)
+    #print(api)
     responseprueba_5=requests.get(api,
                                  stream=True,
                                  headers=headers3)
@@ -718,7 +718,7 @@ listaReach=listaReach.merge(Reacciones,on="ID Publicación",how="left")
 #agregar al excel ya creado
 nombrearchivo="Indicadores_"+fecha3+'.xlsx'
 book = load_workbook(nombrearchivo)
-writer = pandas.ExcelWriter('Indicadores.xlsx')#, engine='openpyxl') 
+writer = pandas.ExcelWriter(nombrearchivo, engine='openpyxl') 
 writer.book = book
 writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
 listaReach.to_excel(writer, 'Indicadores_Publicación',index=False)
