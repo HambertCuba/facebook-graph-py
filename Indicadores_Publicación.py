@@ -34,7 +34,6 @@ fecha3=fecha_atras.strftime(formato2)
 
 #sacar la cuenta de facebook:id y token
 token = "EAAfj47wzha8BAMAacVES9jcb2UJZAFwdJsAokZBCNZAzEVpCPSOHfodvgxqmUJEwtcvMdDKek9EiiPteLMVYIfkPrdLXZCP3f6CT9aQFq7onNCbDaKdvlYKxKKrvTJvAEHwTHvodpUMkhmxRZCMrxZBGZCHGMkcipPR4BZCXN0Qi1FZAKHgZA7dZBA5"
-fields= ['me','access_token']
 me= "122990462555483"
 api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
 print(api)
@@ -45,20 +44,20 @@ responseprueba=requests.get(api,stream=True,headers=headers1)
 #print(response.url)
 responseprueba = responseprueba.json()
 resultadosprueba=responseprueba["data"]
-lista1=[]
-for x in resultadosprueba:
-   ### print(x["name"])
-    accesstoken=x["access_token"]
-    id=x["id"]
-    name=x["name"]
-    lista1.append( ##formato para agregar a una lista de forma manual
-        {
-             "accesstoken":accesstoken,
-             "id":id,
-             "name":name,
-        }
-    )
-resultados=pd.DataFrame(lista1)
+# lista1=[]
+# for x in resultadosprueba:
+#    ### print(x["name"])
+#     accesstoken=x["access_token"]
+#     id=x["id"]
+#     name=x["name"]
+#     lista1.append( ##formato para agregar a una lista de forma manual
+#         {
+#              "accesstoken":accesstoken,
+#              "id":id,
+#              "name":name,
+#         }
+#     )
+# resultados=pd.DataFrame(lista1)
 
 #print(resultadosprueba[0]['id'])
 
@@ -96,14 +95,26 @@ cantidad=len(owned_apps)
 
 #######################parametros para la publicacion
 #identificador de la publicacion
-id = owned_apps[0]['id']
+# id = owned_apps[0]['id']
 
-#fecha de publicacion--prueba
-fecha = owned_apps[0]['created_time']
-fecha= fecha[0:10]
+# #fecha de publicacion--prueba
+# fecha = owned_apps[0]['created_time']
+# fecha= fecha[0:10]
 
 #####################ITERACION PARA METRICA 1 ################
 #Lifetime Post Total Reach
+resultadosprueba=[]
+api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
+print(api)
+headers1 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba=requests.get(api,stream=True,headers=headers1)
+#print(response.url)
+responseprueba = responseprueba.json()
+resultadosprueba=responseprueba["data"]
+
+time.sleep(5)
 token3 = resultadosprueba[3]['access_token']
 headers3 = {
     'Content-Type': 'application/json'
@@ -179,6 +190,18 @@ listaReach=pd.DataFrame(listaReach)
 
 #####################ITERACION PARA METRICA 2 ################
 #Lifetime Post organic reach
+resultadosprueba=[]
+api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
+print(api)
+headers1 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba=requests.get(api,stream=True,headers=headers1)
+#print(response.url)
+responseprueba = responseprueba.json()
+resultadosprueba=responseprueba["data"]
+
+time.sleep(5)
 token3 = resultadosprueba[3]['access_token']
 headers3 = {
     'Content-Type': 'application/json'
@@ -233,6 +256,18 @@ listaReach=listaReach.merge(listaReachOrganic,on="ID Publicación",how="left")
 
 #####################ITERACION PARA METRICA 3 ################
 #Lifetime Post Paid Reach
+resultadosprueba=[]
+api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
+print(api)
+headers1 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba=requests.get(api,stream=True,headers=headers1)
+#print(response.url)
+responseprueba = responseprueba.json()
+resultadosprueba=responseprueba["data"]
+
+time.sleep(5)
 token3 = resultadosprueba[3]['access_token']
 headers3 = {
     'Content-Type': 'application/json'
@@ -288,6 +323,18 @@ listaReach=listaReach.merge(listaReachPaid,on="ID Publicación",how="left")
 
 #####################ITERACION PARA METRICA 4 ################
 #Lifetime Post Total Impressions
+resultadosprueba=[]
+api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
+print(api)
+headers1 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba=requests.get(api,stream=True,headers=headers1)
+#print(response.url)
+responseprueba = responseprueba.json()
+resultadosprueba=responseprueba["data"]
+
+time.sleep(5)
 token3 = resultadosprueba[3]['access_token']
 headers3 = {
     'Content-Type': 'application/json'
@@ -343,6 +390,18 @@ listaReach=listaReach.merge(listaImpressions,on="ID Publicación",how="left")
 
 #####################ITERACION PARA METRICA 5 ################
 #Lifetime Post Total organic Impressions
+resultadosprueba=[]
+api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
+print(api)
+headers1 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba=requests.get(api,stream=True,headers=headers1)
+#print(response.url)
+responseprueba = responseprueba.json()
+resultadosprueba=responseprueba["data"]
+
+time.sleep(5)
 token3 = resultadosprueba[3]['access_token']
 headers3 = {
     'Content-Type': 'application/json'
@@ -397,6 +456,18 @@ listaReach=listaReach.merge(listaImpressionsOrganic,on="ID Publicación",how="le
 
 #####################ITERACION PARA METRICA 6 ################
 #Lifetime Post Total Paid Impressions
+resultadosprueba=[]
+api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
+print(api)
+headers1 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba=requests.get(api,stream=True,headers=headers1)
+#print(response.url)
+responseprueba = responseprueba.json()
+resultadosprueba=responseprueba["data"]
+
+time.sleep(5)
 token3 = resultadosprueba[3]['access_token']
 headers3 = {
     'Content-Type': 'application/json'
@@ -451,6 +522,18 @@ listaReach=listaReach.merge(listaImpressionsPaid,on="ID Publicación",how="left"
 
 #####################ITERACION PARA METRICA 7 ################
 #Lifetime Engaged Users
+resultadosprueba=[]
+api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
+print(api)
+headers1 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba=requests.get(api,stream=True,headers=headers1)
+#print(response.url)
+responseprueba = responseprueba.json()
+resultadosprueba=responseprueba["data"]
+
+time.sleep(5)
 token3 = resultadosprueba[3]['access_token']
 headers3 = {
     'Content-Type': 'application/json'
@@ -506,6 +589,18 @@ listaReach=listaReach.merge(listaEngaged,on="ID Publicación",how="left")
 
 #####################ITERACION PARA METRICA 8 ################
 #Lifetime Negative Feedback from Users
+resultadosprueba=[]
+api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
+print(api)
+headers1 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba=requests.get(api,stream=True,headers=headers1)
+#print(response.url)
+responseprueba = responseprueba.json()
+resultadosprueba=responseprueba["data"]
+
+time.sleep(5)
 token3 = resultadosprueba[3]['access_token']
 headers3 = {
     'Content-Type': 'application/json'
@@ -560,6 +655,18 @@ listaReach=listaReach.merge(listaNegative,on="ID Publicación",how="left")
 
 #####################ITERACION PARA METRICA 9 ################
 #Lifetime Negative Feedback
+resultadosprueba=[]
+api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
+print(api)
+headers1 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba=requests.get(api,stream=True,headers=headers1)
+#print(response.url)
+responseprueba = responseprueba.json()
+resultadosprueba=responseprueba["data"]
+
+time.sleep(5)
 token3 = resultadosprueba[3]['access_token']
 headers3 = {
     'Content-Type': 'application/json'
@@ -620,6 +727,18 @@ listaReach=listaReach.merge(listaFeedback,on="ID Publicación",how="left")
 
 #####################ITERACION PARA METRICA 10 ################
 #Reacciones
+resultadosprueba=[]
+api= "https://graph.facebook.com/"+'v10.0'+'/'+me+'/'+'accounts?fields=name,access_token&access_token='+token
+print(api)
+headers1 = {
+    'Content-Type': 'application/json'
+                }
+responseprueba=requests.get(api,stream=True,headers=headers1)
+#print(response.url)
+responseprueba = responseprueba.json()
+resultadosprueba=responseprueba["data"]
+
+time.sleep(5)
 token3 = resultadosprueba[3]['access_token']
 headers3 = {
     'Content-Type': 'application/json'
@@ -726,7 +845,7 @@ writer.save()
 
 
 #subir a Drive
-subir_archivo('Indicadores.xlsx','1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
+subir_archivo(nombrearchivo,'1YmZfGqBMIFN9pBgRElTo8fIa5DeGJ0ZT')
 
 
 
